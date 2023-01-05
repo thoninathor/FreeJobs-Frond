@@ -5,11 +5,11 @@
 
   &__user {
     padding: 15px 30px;
-    color: $font-light;
+    color: $font-dark;
     border-bottom: 1px solid $border-grey;
-
+    
     &:hover {
-      color: $font-light;
+      color: $font-dark;
       background-color: $background-dark-light;
       text-decoration: none;
     }

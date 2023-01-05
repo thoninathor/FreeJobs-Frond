@@ -126,7 +126,7 @@ export default function SignUpForm(props) {
               placeholder="Fecha de nacimiento"
               name="fechaNacimiento"
               locale={es}
-              selected={new Date(formData.fechaNacimiento)}
+              selected={new Date()}
               onChange={(value) =>
                 setFormData({ ...formData, fechaNacimiento: value })
               }

@@ -63,7 +63,7 @@ export default function PostModal(props) {
             type="submit"
             disabled={message.length > maxLength || message.length < 1}
           >
-            Twittoar
+            Postear
           </Button>
         </Form>
       </Modal.Body>

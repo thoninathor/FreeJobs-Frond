@@ -8,7 +8,7 @@ import "./Error404.scss";
 export default function Error404() {
   return (
     <div className="error404">
-      <img src={Logo} alt="Twittor" />
+      <img src={Logo} alt="FreeJobs" />
       <img src={Error404Image} alt="Error404" />
       <Link to="/">Volver al inicio</Link>
     </div>
