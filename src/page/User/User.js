@@ -1,29 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Button, Spinner } from "react-bootstrap";
-import {useParams} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import BasicLayout from "../../layout/BasicLayout";
 import BannerAvatar from "../../components/User/BannerAvatar";
 import InfoUser from "../../components/User/InfoUser";
-import ListTweets from "../../components/ListTweets";
+import ListPosts from "../../components/ListPosts";
 import { getUserApi } from "../../api/user";
-import { getUserTweetsApi } from "../../api/tweet";
+import { getUserPostsApi } from "../../api/post";
 
 import "./User.scss";
 
-export default function User(props) {
-
-  const {user_id} = useParams();
-  const { setRefreshCheckLogin } = props;
+function User(props) {
+  const { match, setRefreshCheckLogin } = props;
   const [user, setUser] = useState(null);
-  const [tweets, setTweets] = useState(null);
+  const [posts, setPosts] = useState(null);
   const [page, setPage] = useState(1);
-  const [loadingTweets, setLoadingTweets] = useState(false);
+  const [loadingPosts, setLoadingPosts] = useState(false);
+  const { params } = match;
   const loggedUser = useAuth();
+  
 
   useEffect(() => {
-    getUserApi(user_id)
+    getUserApi(params.id)
       .then((response) => {
         if (!response) toast.error("El usuario que has visitado no existe");
         setUser(response);
@@ -31,33 +31,33 @@ export default function User(props) {
       .catch(() => {
         toast.error("El usuario que has visitado no existe");
       });
-  }, [user_id]);
+  }, [params]);
 
   useEffect(() => {
-    getUserTweetsApi(user_id, 1)
+    getUserPostsApi(params.id, 1)
       .then((response) => {
-        setTweets(response);
+        setPosts(response);
       })
       .catch(() => {
-        setTweets([]);
+        setPosts([]);
       });
-  }, [user_id]);
+  }, [params]);
 
   const moreData = () => {
     const pageTemp = page + 1;
-    setLoadingTweets(true);
+    setLoadingPosts(true);
 
-    getUserTweetsApi(user_id, pageTemp).then((response) => {
+    getUserPostsApi(params.id, pageTemp).then((response) => {
       if (!response) {
-        setLoadingTweets(0);
+        setLoadingPosts(0);
       } else {
-        setTweets([...tweets, ...response]);
+        setPosts([...posts, ...response]);
         setPage(pageTemp);
-        setLoadingTweets(false);
+        setLoadingPosts(false);
       }
     });
   };
-
+  console.log(posts);
   return (
     <BasicLayout className="user" setRefreshCheckLogin={setRefreshCheckLogin}>
       <div className="user__title">
@@ -67,12 +67,12 @@ export default function User(props) {
       </div>
       <BannerAvatar user={user} loggedUser={loggedUser} />
       <InfoUser user={user} />
-      <div className="user__tweets">
+      <div className="user__posts">
         <h3>Tweets</h3>
-        {tweets && <ListTweets tweets={tweets} />}
+        {posts && <ListPosts posts={posts} />}
         <Button onClick={moreData}>
-          {!loadingTweets ? (
-            loadingTweets !== 0 && "Obtener más Tweets"
+          {!loadingPosts ? (
+            loadingPosts !== 0 && "Obtener más Tweets"
           ) : (
             <Spinner
               as="span"
@@ -88,4 +88,4 @@ export default function User(props) {
   );
 }
 
-
+export default withRouter(User);

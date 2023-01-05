@@ -8,7 +8,7 @@ import {
   faUsers,
   faPowerOff,
 } from "@fortawesome/free-solid-svg-icons";
-import TweetModal from "../Modal/TweetModal";
+import PostModal from "../Modal/PostModal";
 import { logoutApi } from "../../api/auth";
 import useAuth from "../../hooks/useAuth";
 import LogoWhite from "../../assets/png/logo-white.png";
@@ -44,7 +44,7 @@ export default function LeftMenu(props) {
 
       <Button onClick={() => setShowModal(true)}>Twittoar</Button>
 
-      <TweetModal show={showModal} setShow={setShowModal} />
+      <PostModal show={showModal} setShow={setShowModal} />
     </div>
   );
 }

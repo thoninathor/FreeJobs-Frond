@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Spinner, ButtonGroup, Button } from "react-bootstrap";
-import {useParams} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import { isEmpty } from "lodash";
 import { useDebouncedCallback } from "use-debounce";
@@ -10,15 +10,14 @@ import { getFollowsApi } from "../../api/follow";
 
 import "./Users.scss";
 
-export default  function Users(props) {
-  const {user_id} = useParams();
+function Users(props) {
   const { setRefreshCheckLogin, location, history } = props;
   const [users, setUsers] = useState(null);
   const params = useUsersQuery(location);
   const [typeUser, setTypeUser] = useState(params.type || "follow");
   const [btnLoading, setBtnLoading] = useState(false);
 
-  const [onSearch] = useDebouncedCallback((value) => {
+  const onSearch = useDebouncedCallback((value) => {
     setUsers(null);
     history.push({
       search: queryString.stringify({ ...params, search: value, page: 1 }),
@@ -135,3 +134,4 @@ function useUsersQuery(location) {
   return { page, type, search };
 }
 
+export default withRouter(Users);

@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Button, Spinner } from "react-bootstrap";
 import BasicLayout from "../../layout/BasicLayout";
-import ListTweets from "../../components/ListTweets";
-import { getTweetsFollowersApi } from "../../api/tweet";
+import ListPosts from "../../components/ListPosts";
+import { getPostsFollowersApi } from "../../api/post";
 
 import "./Home.scss";
 
 export default function Home(props) {
   const { setRefreshCheckLogin } = props;
-  const [tweets, setTweets] = useState(null);
+  const [posts, setPosts] = useState(null);
   const [page, setPage] = useState(1);
-  const [loadingTweets, setLoadingTweets] = useState(false);
+  const [loadingPosts, setLoadingPosts] = useState(false);
 
   useEffect(() => {
-    getTweetsFollowersApi(page)
+    getPostsFollowersApi(page)
       .then((response) => {
-        if (!tweets && response) {
-          setTweets(formatModel(response));
+        console.log(response);
+        if (!posts && response) {
+          setPosts(formatModel(response));
         } else {
           if (!response) {
-            setLoadingTweets(0);
+            setLoadingPosts(0);
           } else {
             const data = formatModel(response);
-            setTweets([...tweets, ...data]);
-            setLoadingTweets(false);
+            setPosts([...posts, ...data]);
+            setLoadingPosts(false);
           }
         }
       })
@@ -32,7 +33,7 @@ export default function Home(props) {
   }, [page]);
 
   const moreData = () => {
-    setLoadingTweets(true);
+    setLoadingPosts(true);
     setPage(page + 1);
   };
 
@@ -41,13 +42,13 @@ export default function Home(props) {
       <div className="home__title">
         <h2>Inicio</h2>
       </div>
-      {tweets && <ListTweets tweets={tweets} />}
+      {posts && <ListPosts posts={posts} />}
       <Button onClick={moreData} className="load-more">
-        {!loadingTweets ? (
-          loadingTweets !== 0 ? (
-            "Obtener más Tweets"
+        {!loadingPosts ? (
+          loadingPosts !== 0 ? (
+            "Obtener más Posts"
           ) : (
-            "No hay más tweets"
+            "No hay más posts"
           )
         ) : (
           <Spinner
@@ -63,15 +64,16 @@ export default function Home(props) {
   );
 }
 
-function formatModel(tweets) {
-  const tweetsTemp = [];
-  tweets.forEach((tweet) => {
-    tweetsTemp.push({
-      _id: tweet._id,
-      userId: tweet.userRelationId,
-      mensaje: tweet.Tweet.mensaje,
-      fecha: tweet.Tweet.fecha,
+function formatModel(posts) {
+  const postsTemp = [];
+  posts.forEach((post) => {
+    postsTemp.push({
+      _id: post._id,
+      userId: post.userRelationId,
+      mensaje: post.Post.mensaje,
+      fecha: post.Post.fecha,
     });
   });
-  return tweetsTemp;
+  
+  return postsTemp;
 }

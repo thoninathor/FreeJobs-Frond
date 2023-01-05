@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import es from "date-fns/locale/es";
+
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import { isEmailValid } from "../../utils/validations";
@@ -108,6 +111,29 @@ export default function SignUpForm(props) {
             </Col>
           </Row>
         </Form.Group>
+        <Form.Group>
+        <Row>
+            <Col>
+              <Form.Control
+                type="phone"
+                placeholder="Telefono"
+                name="phone"
+                defaultValue={formData.phone}
+              />
+            </Col>
+            <Col>
+              <DatePicker
+              placeholder="Fecha de nacimiento"
+              name="fechaNacimiento"
+              locale={es}
+              selected={new Date(formData.fechaNacimiento)}
+              onChange={(value) =>
+                setFormData({ ...formData, fechaNacimiento: value })
+              }
+              />
+            </Col>
+          </Row>
+        </Form.Group>
 
         <Button variant="primary" type="submit">
           {!signUpLoading ? "Registrase" : <Spinner animation="border" />}
@@ -123,6 +149,9 @@ function initialFormValue() {
         password: "",
         nombre:"",
         apellido:"",
-        repeatPassword: ""
+        repeatPassword: "",
+        isOfer:"",
+        fechaNacimiento:"",
+        phone :"", 
   };
 }

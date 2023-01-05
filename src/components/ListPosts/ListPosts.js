@@ -7,27 +7,27 @@ import { API_HOST } from "../../utils/constant";
 import { getUserApi } from "../../api/user";
 import { replaceURLWithHTMLLinks } from "../../utils/functions";
 
-import "./ListTweets.scss";
+import "./ListPosts.scss";
 
-export default function ListTweets(props) {
-  const { tweets } = props;
+export default function ListPosts(props) {
+  const { posts } = props;
 
   return (
-    <div className="list-tweets">
-      {map(tweets, (tweet, index) => (
-        <Tweet key={index} tweet={tweet} />
+    <div className="list-posts">
+      {map(posts, (post, index) => (
+        <Post key={index} post={post} />
       ))}
     </div>
   );
 }
 
-function Tweet(props) {
-  const { tweet } = props;
+function Post(props) {
+  const { post } = props;
   const [userInfo, setUserInfo] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
 
   useEffect(() => {
-    getUserApi(tweet.userId).then((response) => {
+    getUserApi(post.userId).then((response) => {
       setUserInfo(response);
       setAvatarUrl(
         response?.avatar
@@ -35,19 +35,19 @@ function Tweet(props) {
           : AvatarNoFound
       );
     });
-  }, [tweet]);
+  }, [post]);
 
   return (
-    <div className="tweet">
+    <div className="post">
       <Image className="avatar" src={avatarUrl} roundedCircle />
       <div>
         <div className="name">
           {userInfo?.nombre} {userInfo?.apellidos}
-          <span>{moment(tweet.fecha).calendar()}</span>
+          <span>{moment(post.fecha).calendar()}</span>
         </div>
         <div
           dangerouslySetInnerHTML={{
-            __html: replaceURLWithHTMLLinks(tweet.mensaje),
+            __html: replaceURLWithHTMLLinks(post.mensaje),
           }}
         />
       </div>

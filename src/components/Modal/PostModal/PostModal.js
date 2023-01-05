@@ -3,11 +3,11 @@ import { Modal, Form, Button } from "react-bootstrap";
 import classNames from "classnames";
 import { toast } from "react-toastify";
 import { Close } from "../../../utils/Icons";
-import { addTweetApi } from "../../../api/tweet";
+import { addPostApi } from "../../../api/post";
 
-import "./TweetModal.scss";
+import "./PostModal.scss";
 
-export default function TweetModal(props) {
+export default function PostModal(props) {
   const { show, setShow } = props;
   const [message, setMessage] = useState("");
   const maxLength = 280;
@@ -16,7 +16,7 @@ export default function TweetModal(props) {
     e.preventDefault();
 
     if (message.length > 0 && message.length <= maxLength) {
-      addTweetApi(message)
+      addPostApi(message)
         .then((response) => {
           console.log(response);
           if (response?.code >= 200 && response?.code < 300) {
@@ -26,14 +26,14 @@ export default function TweetModal(props) {
           }
         })
         .catch(() => {
-          toast.warning("Erorr al enviar el tweet, inténtelo más tarde.");
+          toast.warning("Erorr al enviar el post, inténtelo más tarde.");
         });
     }
   };
 
   return (
     <Modal
-      className="tweet-modal"
+      className="post-modal"
       show={show}
       onHide={() => setShow(false)}
       centered

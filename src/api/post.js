@@ -1,7 +1,7 @@
 import { API_HOST } from "../utils/constant";
 import { getTokenApi } from "./auth";
 
-export function addTweetApi(mensaje) {
+export function addPostApi(mensaje) {
   const url = `${API_HOST}/post`;
   const data = {
     mensaje,
@@ -19,7 +19,7 @@ export function addTweetApi(mensaje) {
   return fetch(url, params)
     .then((response) => {
       if (response.status >= 200 && response.status < 300) {
-        return { code: response.status, message: "Tweet enviado." };
+        return { code: response.status, message: "Post enviado." };
       }
       return { code: 500, message: "Error del servidor." };
     })
@@ -28,7 +28,7 @@ export function addTweetApi(mensaje) {
     });
 }
 
-export function getUserTweetsApi(idUser, page) {
+export function getUserPostsApi(idUser, page) {
   const url = `${API_HOST}/leoPosts?id=${idUser}&pagina=${page}`;
 
   const params = {
@@ -47,13 +47,13 @@ export function getUserTweetsApi(idUser, page) {
     });
 }
 
-export function getTweetsFollowersApi(page = 1) {
+export function getPostsFollowersApi(page = 1) {
   const url = `${API_HOST}/leoPostsSeguidores?pagina=${page}`;
 
   const params = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getTokenApi()}`,
+      Authorization: `Bearer${getTokenApi()}`,
     },
   };
 
