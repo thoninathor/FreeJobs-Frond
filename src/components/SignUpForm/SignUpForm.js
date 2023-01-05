@@ -11,8 +11,8 @@ import { signUpApi } from "../../api/auth";
 import "./SignUpForm.scss";
 
 export default function SignUpForm(props) {
-  const { setShowModal } = props;
-  const [formData, setFormData] = useState(initialFormValue());
+  const { user, setShowModal } = props;
+  const [formData, setFormData] = useState(initialFormValue(user));
   const [signUpLoading, setSignUpLoading] = useState(false);
 
   const onSubmit = e => {
@@ -56,6 +56,7 @@ export default function SignUpForm(props) {
   };
 
   const onChange = e => {
+    console.log(formData)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -125,8 +126,8 @@ export default function SignUpForm(props) {
               <DatePicker
               placeholder="Fecha de nacimiento"
               name="fechaNacimiento"
+              selected={formData?.fechaNacimiento ? new Date(formData.fechaNacimiento) : new Date()}
               locale={es}
-              selected={new Date(formData.fechaNacimiento)}
               onChange={(value) =>
                 setFormData({ ...formData, fechaNacimiento: value })
               }
@@ -150,7 +151,7 @@ function initialFormValue() {
         nombre:"",
         apellido:"",
         repeatPassword: "",
-        isOfer:"",
+        isOfer:true,
         fechaNacimiento:"",
         phone :"", 
   };
