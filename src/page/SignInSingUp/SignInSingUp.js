@@ -49,6 +49,18 @@ function LeftComponent() {
     <Col className="signin-signup__left" xs={6}>
       <img src={LogoFreeJobs} alt="FreeJobs" />
       <div>
+        <h2>
+          <FontAwesomeIcon icon={faSearch} />
+          Sigue lo que te interesa.
+        </h2>
+        <h2>
+          <FontAwesomeIcon icon={faUsers} />
+          Entérate de qué está hablando la gente.
+        </h2>
+        <h2>
+          <FontAwesomeIcon icon={faComment} />
+          Únete a la conversación.
+        </h2>
       </div>
     </Col>
   );
