@@ -69,7 +69,7 @@ function User(props) {
       <BannerAvatar user={user} loggedUser={loggedUser} />
       <InfoUser user={user} />
       <div className="user__posts">
-        <h3>Posts</h3>
+        <h3>Reseñas</h3>
         {posts && <ListPosts posts={posts} />}
         <Button onClick={moreData}>
           {!loadingPosts ? (

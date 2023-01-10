@@ -29,7 +29,11 @@
     right: 15px;
 
     button {
+      position: relative;
       border-radius: 50px;
+      margin: 5px;
+      bottom: -50px;
+      right: 15px;
       background-color: $primary;
       width: 150px;
 

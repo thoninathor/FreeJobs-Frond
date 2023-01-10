@@ -60,9 +60,17 @@ export default function BannerAvatar(props) {
       />
       {user && (
         <div className="options">
-          {loggedUser._id === user.id && (
+          <div>
+            {loggedUser._id === user.id && (
             <Button onClick={() => setShowModal(true)}>Editar perfil</Button>
+          )} 
+          </div>
+          <div>
+          {loggedUser._id === user.id && (
+            <Button onClick={() => setShowModal(true)}>Ver reseñas</Button>
           )}
+          </div>
+          
 
           {loggedUser._id !== user.id &&
             following !== null &&

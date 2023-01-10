@@ -7,10 +7,8 @@ import { API_HOST } from "../../utils/constant";
 import { getUserApi } from "../../api/user";
 import { replaceURLWithHTMLLinks } from "../../utils/functions";
 
-import "./ListPosts.scss";
-
-export default function ListPosts(props) {
-  const { posts } = props;
+export default function ListResna(props) {
+   const { posts } = props;
 
   return (
     <div className="list-posts">
@@ -42,7 +40,7 @@ function Post(props) {
       <Image className="avatar" src={avatarUrl} roundedCircle />
       <div>
         <div className="name">
-          Mario Moralez
+          {userInfo?.nombre} {userInfo?.apellidos}
           <span>{moment(post.fecha).calendar()}</span>
         </div>
         <div
@@ -51,9 +49,6 @@ function Post(props) {
 
           }}
         />
-        <div className="puntuacion">
-              5 estrellas
-        </div>
         <Image className="postImg" src={avatarUrl} />
       </div>
     </div>
