@@ -48,8 +48,10 @@ function Post(props) {
         <div
           dangerouslySetInnerHTML={{
             __html: replaceURLWithHTMLLinks(post.mensaje),
+
           }}
         />
+        <Image className="postImg" src={avatarUrl} />
       </div>
     </div>
   );

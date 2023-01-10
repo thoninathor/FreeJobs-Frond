@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
+import { Row, Col, Form, Button, Spinner, Dropdown } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
-
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import { isEmailValid } from "../../utils/validations";
 import { signUpApi } from "../../api/auth";
 
 import "./SignUpForm.scss";
+import { faHandsHelping } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignUpForm(props) {
   const { user, setShowModal } = props;
@@ -17,6 +17,8 @@ export default function SignUpForm(props) {
 
   const onSubmit = e => {
     e.preventDefault();
+
+    
 
     let validCount = 0;
     values(formData).some(value => {
@@ -54,6 +56,12 @@ export default function SignUpForm(props) {
       }
     }
   };
+
+  function toggleBoolean(){
+    setFormData({...formData, isOfer: !formData.isOfer,
+    });
+    console.log(formData);
+  }
 
   const onChange = e => {
     console.log(formData)
@@ -123,20 +131,25 @@ export default function SignUpForm(props) {
               />
             </Col>
             <Col>
-              <DatePicker
-              placeholder="Fecha de nacimiento"
-              name="fechaNacimiento"
-              selected={formData?.fechaNacimiento ? new Date(formData.fechaNacimiento) : new Date()}
-              locale={es}
-              onChange={(value) =>
-                setFormData({ ...formData, fechaNacimiento: value })
-              }
-              />
+            <Button variant="primary" type="submit" className="boton2" onClick = {toggleBoolean}>
+                ?
+            </Button>
             </Col>
           </Row>
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Form.Group>
+          <DatePicker
+            placeholder="Fecha de nacimiento"
+            locale={es}
+            selected={formData?.fechaNacimiento ? new Date(formData.fechaNacimiento) : new Date()}
+            onChange={(value) =>
+              setFormData({ ...formData, fechaNacimiento: value })
+            }
+          />
+        </Form.Group>
+
+        <Button variant="primary" type="submit" className="boton1">
           {!signUpLoading ? "Registrase" : <Spinner animation="border" />}
         </Button>
       </Form>
@@ -151,7 +164,7 @@ function initialFormValue() {
         nombre:"",
         apellido:"",
         repeatPassword: "",
-        isOfer:true,
+        isOfer: false,
         fechaNacimiento:"",
         phone :"", 
   };

@@ -1,12 +1,13 @@
 import { API_HOST } from "../utils/constant";
 import { getTokenApi } from "./auth";
 
-export function addPostApi(mensaje) {
+export function addPostApi(mensaje, postFile) {
   const url = `${API_HOST}/post`;
   const data = {
     mensaje,
+    file : postFile,
   };
-
+  console.log(mensaje , postFile);
   const params = {
     method: "POST",
     headers: {
@@ -46,6 +47,33 @@ export function getUserPostsApi(idUser, page) {
       return err;
     });
 }
+
+export function uploadPostApi(file) {
+  const url = `${API_HOST}/subirPostImg`;
+
+  const formData = new FormData();
+  formData.append("postImg", file);
+
+  const params = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${getTokenApi()}`
+    },
+    body: formData
+  };
+
+  return fetch(url, params)
+    .then(response => {
+      return response.json();
+    })
+    .then(result => {
+      return result;
+    })
+    .catch(err => {
+      return err;
+    });
+}
+
 
 export function getPostsFollowersApi(page = 1) {
   const url = `${API_HOST}/leoPostsSeguidores?pagina=${page}`;

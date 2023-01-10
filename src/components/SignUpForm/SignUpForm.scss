@@ -9,12 +9,15 @@
   .form-group {
     padding-bottom: 20px;
 
+    
+
     input {
       font-size: 25px;
     }
+    
   }
 
-  button {
+  .boton1 {
     width: 100%;
     font-size: 20px;
     font-weight: bold;
@@ -26,5 +29,11 @@
       width: 25px;
       height: 25px;
     }
+  }
+
+  .boton2{
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
   }
 }
