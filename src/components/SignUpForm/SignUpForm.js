@@ -27,7 +27,9 @@ export default function SignUpForm(props) {
             axios
                 .get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`)
                 .then(response => {
-                    setFormData({...formData, ubicacion: response.data.results[0].formatted_address})
+                  const ubicacionFiltrar = response.data.results[0].formatted_address;
+                  const ubicacion = ubicacionFiltrar.replace(/^.*?,.*?,/, '').replace(/\d+ /, '')
+                  setFormData({...formData, ubicacion: ubicacion})
                 })
                 .catch(err => {
                     console.log(err);
@@ -92,11 +94,14 @@ export default function SignUpForm(props) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleDateChange = date => {
+    setFormData({ ...formData, fechaNacimiento: date });
+  }
+
   useEffect(() => {
     getLocation();
   }, []);
 
-  console.log(formData.ubicacion)
 
   return (
     <div className="sign-up-form">
@@ -116,8 +121,8 @@ export default function SignUpForm(props) {
               <Form.Control
                 type="text"
                 placeholder="Apellidos"
-                name="apellido"
-                defaultValue={formData.apellido}
+                name="apellidos"
+                defaultValue={formData.apellidos}
               />
             </Col>
           </Row>
@@ -172,10 +177,9 @@ export default function SignUpForm(props) {
           <DatePicker
             placeholder="Fecha de nacimiento"
             locale={es}
-            selected={formData?.fechaNacimiento ? new Date(formData.fechaNacimiento) : new Date()}
-            onChange={(value) =>
-              setFormData({ ...formData, fechaNacimiento: value })
-            }
+            selected={formData.fechaNacimiento}            
+            onChange={handleDateChange}
+            dateFormat="d MMMM, yyyy"
           />
         </Form.Group>
 
@@ -192,11 +196,11 @@ function initialFormValue() {
         email:"",
         password: "",
         nombre:"",
-        apellido:"",
+        apellidos:"",
         repeatPassword: "",
-        isOfer: null,
+        isOfer: false,
         fechaNacimiento: new Date(),
         phone :"", 
-        ubicacion:""
+        ubicacion:"",
   };
 }

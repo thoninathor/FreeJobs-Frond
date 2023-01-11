@@ -6,7 +6,6 @@ export function signUpApi(user) {
   const userTemp = {
     ...user,
     email: user.email.toLowerCase(),
-    fechaNacimiento: new Date()
   };
   delete userTemp.repeatPassword;
 

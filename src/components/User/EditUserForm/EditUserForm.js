@@ -160,7 +160,7 @@ export default function EditUserForm(props) {
           <DatePicker
             placeholder="Fecha de nacimiento"
             locale={es}
-            selected={new Date(user.fechaNacimiento)}
+            selected={new Date(formData.fechaNacimiento)}
             onChange={(value) =>
               setFormData({ ...formData, fechaNacimiento: value })
             }
