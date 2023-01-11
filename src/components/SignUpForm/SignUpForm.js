@@ -18,8 +18,6 @@ export default function SignUpForm(props) {
   const onSubmit = e => {
     e.preventDefault();
 
-    
-
     let validCount = 0;
     values(formData).some(value => {
       value && validCount++;
@@ -36,6 +34,7 @@ export default function SignUpForm(props) {
       } else if (size(formData.password) < 6) {
         toast.warning("La contraseña tiene que tener al menos 6 caracteres");
       } else {
+        
         setSignUpLoading(true);
         signUpApi(formData)
           .then(response => {
@@ -131,8 +130,8 @@ export default function SignUpForm(props) {
               />
             </Col>
             <Col>
-            <Button variant="primary" type="submit" className="boton2" onClick = {toggleBoolean}>
-                ?
+            <Button className="boton2" onClick = {toggleBoolean}>
+                Ofertante   ?
             </Button>
             </Col>
           </Row>
@@ -164,8 +163,8 @@ function initialFormValue() {
         nombre:"",
         apellido:"",
         repeatPassword: "",
-        isOfer: false,
-        fechaNacimiento:"",
+        isOfer: null,
+        fechaNacimiento: new Date(),
         phone :"", 
   };
 }

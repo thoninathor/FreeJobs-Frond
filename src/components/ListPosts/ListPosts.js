@@ -5,12 +5,14 @@ import moment from "moment";
 import AvatarNoFound from "../../assets/png/avatar-no-found.png";
 import { API_HOST } from "../../utils/constant";
 import { getUserApi } from "../../api/user";
+import {uploadPostApi} from "../../api/post";
 import { replaceURLWithHTMLLinks } from "../../utils/functions";
 
 import "./ListPosts.scss";
 
 export default function ListPosts(props) {
   const { posts } = props;
+  
 
   return (
     <div className="list-posts">
@@ -26,6 +28,9 @@ function Post(props) {
   const [userInfo, setUserInfo] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
 
+  const postImgUrl =  post?.postimg ? `${API_HOST}/obtenerBanner?id=${post.userId}`
+  : null;
+
   useEffect(() => {
     getUserApi(post.userId).then((response) => {
       setUserInfo(response);
@@ -36,13 +41,14 @@ function Post(props) {
       );
     });
   }, [post]);
+  
 
   return (
     <div className="post">
       <Image className="avatar" src={avatarUrl} roundedCircle />
       <div>
         <div className="name">
-          Mario Moralez
+        {userInfo?.nombre} {userInfo?.apellidos}
           <span>{moment(post.fecha).calendar()}</span>
         </div>
         <div
@@ -54,7 +60,8 @@ function Post(props) {
         <div className="puntuacion">
               5 estrellas
         </div>
-        <Image className="postImg" src={avatarUrl} />
+        <div className="postImg" style={{ backgroundImage: `url('${postImgUrl}')` }} >
+        </div>
       </div>
     </div>
   );

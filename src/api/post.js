@@ -1,13 +1,12 @@
 import { API_HOST } from "../utils/constant";
 import { getTokenApi } from "./auth";
 
-export function addPostApi(mensaje, postFile) {
+export function addPostApi(mensaje) {
   const url = `${API_HOST}/post`;
   const data = {
     mensaje,
-    file : postFile,
   };
-  console.log(mensaje , postFile);
+  console.log(mensaje );
   const params = {
     method: "POST",
     headers: {
