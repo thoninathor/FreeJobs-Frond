@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://tu-backend.com",
+    "secure": false
+  }
+}

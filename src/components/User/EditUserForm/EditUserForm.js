@@ -149,9 +149,9 @@ export default function EditUserForm(props) {
         <Form.Group>
           <Form.Control
             type="text"
-            placeholder="Sitio web"
+            placeholder="Telefono"
             name="sitioWeb"
-            defaultValue={formData.sitioWeb}
+            defaultValue={user.phone}
             onChange={onChange}
           />
         </Form.Group>
@@ -160,7 +160,7 @@ export default function EditUserForm(props) {
           <DatePicker
             placeholder="Fecha de nacimiento"
             locale={es}
-            selected={new Date(formData.fechaNacimiento)}
+            selected={new Date(user.fechaNacimiento)}
             onChange={(value) =>
               setFormData({ ...formData, fechaNacimiento: value })
             }
