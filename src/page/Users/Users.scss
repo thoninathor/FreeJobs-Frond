@@ -39,7 +39,7 @@
       border-radius: 0;
 
       &:hover {
-        background-color: rgba(29, 161, 242, 0.1) !important;
+        background-color: $primary !important;
       }
       &.active {
         border-bottom: 3px solid $primary;

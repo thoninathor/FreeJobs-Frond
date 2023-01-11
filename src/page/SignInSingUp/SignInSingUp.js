@@ -51,15 +51,15 @@ function LeftComponent() {
       <div>
         <h2>
           <FontAwesomeIcon icon={faSearch} />
-          Sigue lo que te interesa.
+          Busca profesionistas.
         </h2>
         <h2>
           <FontAwesomeIcon icon={faUsers} />
-          Entérate de qué está hablando la gente.
+          Entérate de la opinion de la gente.
         </h2>
         <h2>
           <FontAwesomeIcon icon={faComment} />
-          Únete a la conversación.
+          Contacta y resuelve.
         </h2>
       </div>
     </Col>

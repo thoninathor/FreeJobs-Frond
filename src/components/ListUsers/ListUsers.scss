@@ -2,11 +2,11 @@
 
 .list-users {
   padding: 0;
-
   &__user {
     padding: 15px 30px;
     color: $font-dark;
     border-bottom: 1px solid $border-grey;
+
     
     &:hover {
       color: $font-dark;
