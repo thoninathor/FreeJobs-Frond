@@ -6,6 +6,9 @@ import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import { isEmailValid } from "../../utils/validations";
 import { signUpApi } from "../../api/auth";
+import axios from "axios";
+import {useEffect} from 'react'
+
 
 import "./SignUpForm.scss";
 import { faHandsHelping } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +17,28 @@ export default function SignUpForm(props) {
   const { user, setShowModal } = props;
   const [formData, setFormData] = useState(initialFormValue(user));
   const [signUpLoading, setSignUpLoading] = useState(false);
+ 
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const API_KEY = "AIzaSyAiX028Ae0mth3rt13hBdXOjHv1SiT4plk";
+            axios
+                .get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`)
+                .then(response => {
+                    setFormData({...formData, ubicacion: response.data.results[0].formatted_address})
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
+        error => {
+            console.log(error);
+        }
+    );
+  };
+
 
   const onSubmit = e => {
     e.preventDefault();
@@ -66,6 +91,12 @@ export default function SignUpForm(props) {
     console.log(formData)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  console.log(formData.ubicacion)
 
   return (
     <div className="sign-up-form">
@@ -166,5 +197,6 @@ function initialFormValue() {
         isOfer: null,
         fechaNacimiento: new Date(),
         phone :"", 
+        ubicacion:""
   };
 }
