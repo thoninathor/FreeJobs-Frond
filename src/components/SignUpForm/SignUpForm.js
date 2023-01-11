@@ -195,7 +195,7 @@ function initialFormValue() {
         apellido:"",
         repeatPassword: "",
         isOfer: null,
-        fechaNacimiento: new Date(),
+        fechaNacimiento: "",
         phone :"", 
         ubicacion:""
   };

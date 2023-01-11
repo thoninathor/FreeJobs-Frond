@@ -21,7 +21,7 @@ function User(props) {
   const { params } = match;
   const loggedUser = useAuth();
   
-  console.log(posts);
+  console.log(props);
 
   useEffect(() => {
     getUserApi(params.id)
@@ -69,7 +69,7 @@ function User(props) {
       <BannerAvatar user={user} loggedUser={loggedUser} />
       <InfoUser user={user} />
       <div className="user__posts">
-        <h3>Reseñas</h3>
+        <h3>Post</h3>
         {posts && <ListPosts posts={posts} />}
         <Button onClick={moreData}>
           {!loadingPosts ? (

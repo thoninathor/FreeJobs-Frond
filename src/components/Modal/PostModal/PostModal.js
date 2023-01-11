@@ -17,7 +17,7 @@ export default function PostModal(props) {
   const [postURl, setPostURl] = useState(null);
   const maxLength = 280;
 
-  const [postFile, setPostFlie] = useState( user?.postimg ? `${API_HOST}/obtenerBanner?id=${user.id}` : null);
+  const [postFile, setPostFlie] = useState(null);
 
   const  onDropPost = useCallback(acceptedFile => {
     const file = acceptedFile[0];

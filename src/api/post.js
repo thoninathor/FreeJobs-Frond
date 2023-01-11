@@ -6,7 +6,7 @@ export function addPostApi(mensaje) {
   const data = {
     mensaje,
   };
-  console.log(mensaje );
+  console.log(mensaje);
   const params = {
     method: "POST",
     headers: {
@@ -49,14 +49,14 @@ export function getUserPostsApi(idUser, page) {
 
 export function uploadPostApi(file) {
   const url = `${API_HOST}/subirPostImg`;
-
+  console.log(file);
   const formData = new FormData();
-  formData.append("postImg", file);
+  formData.append("postimg", file);
 
   const params = {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${getTokenApi()}`
+      Authorization: `Bearer ${getTokenApi()}`,
     },
     body: formData
   };
@@ -72,6 +72,7 @@ export function uploadPostApi(file) {
       return err;
     });
 }
+
 
 
 export function getPostsFollowersApi(page = 1) {

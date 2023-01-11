@@ -12,24 +12,23 @@ import "./ListPosts.scss";
 
 export default function ListPosts(props) {
   const { posts } = props;
-  
-
+  console.log(posts.postimg);
   return (
     <div className="list-posts">
-      {map(posts, (post, index) => (
-        <Post key={index} post={post} />
+      {map(posts, (post, index, postimg) => (
+        <Post key={index} post={post} postimg={postimg[index]}/>
       ))}
     </div>
   );
 }
 
 function Post(props) {
+  console.log(props);
   const { post } = props;
   const [userInfo, setUserInfo] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
+  
 
-  const postImgUrl =  post?.postimg ? `${API_HOST}/obtenerBanner?id=${post.userId}`
-  : null;
 
   useEffect(() => {
     getUserApi(post.userId).then((response) => {
@@ -41,6 +40,8 @@ function Post(props) {
       );
     });
   }, [post]);
+
+
   
 
   return (
@@ -57,11 +58,8 @@ function Post(props) {
 
           }}
         />
-        <div className="puntuacion">
-              5 estrellas
-        </div>
-        <div className="postImg" style={{ backgroundImage: `url('${postImgUrl}')` }} >
-        </div>
+        <Image className="postImg" src={avatarUrl} />
+
       </div>
     </div>
   );
