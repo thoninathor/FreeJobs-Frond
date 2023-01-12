@@ -54,7 +54,6 @@ export async function uploadAndGetPosts(mensaje, postFile, idUser, page) {
   return singleObjectResponse;
 }
 
-
 export function addPostApi(mensaje) {
   const url = `${API_HOST}/post`;
   const data = {
