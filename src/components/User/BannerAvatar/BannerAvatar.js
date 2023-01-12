@@ -83,7 +83,8 @@ export default function BannerAvatar(props) {
               <Button  onClick={onFollow}>Seguir</Button>
             ))}
             
-            <Button onClick={() => setShowResenaModal(true)}>Escribe una reseña</Button>
+            {loggedUser._id !== user.id && following ?
+              (<Button onClick={() => setShowResenaModal(true)}>Escribe una reseña</Button>) : ('')}
             <ResenaModal show={showResenaModal} setShow={setShowResenaModal}/>
 
             <Button onClick={() => setShowVerResenaModal(true)}>Ver reseñas </Button>

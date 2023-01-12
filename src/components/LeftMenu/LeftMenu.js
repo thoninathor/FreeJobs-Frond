@@ -1,3 +1,4 @@
+import { getUserApi } from "../../api/user";
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -14,28 +15,21 @@ import { logoutApi } from "../../api/auth";
 import useAuth from "../../hooks/useAuth";
 import LogoWhite from "../../assets/png/logo-white.png";
 
+
+
 import "./LeftMenu.scss";
 
 export default function LeftMenu(props) {
   const { setRefreshCheckLogin } = props;
   const [showModal, setShowModal] = useState(false);
-  const [currentUuser, setCurrentUser] = useState(null);
   const user = useAuth();
+
+  console.log(user);
 
   const logout = () => {
     logoutApi();
     setRefreshCheckLogin(true);
   };
-
-  useEffect(() => {
-    getUserApi(user._id)
-      .then((response) => {
-        setCurrentUser(response);
-      })
-      .catch(() => {
-        toast.error("Error buscando el usuario");
-      });
-  }, []);
 
   return (
     <div className="left-menu">
@@ -54,7 +48,7 @@ export default function LeftMenu(props) {
         <FontAwesomeIcon icon={faPowerOff} /> Cerrar sesión
       </Link>
 
-      {currentUuser.isOfer(<Button onClick={() => setShowModal(true)}>Postea tu trabajo</Button>)}
+      {user.is_ofer ? (<Button onClick={() => setShowModal(true)}>Postea tu trabajo</Button>):('')}
 
       <PostModal show={showModal} setShow={setShowModal} userId = {user._id}/>
 

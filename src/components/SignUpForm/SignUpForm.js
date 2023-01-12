@@ -47,11 +47,7 @@ export default function SignUpForm(props) {
   const onSubmit = e => {
     e.preventDefault();
 
-    let validCount = 0;
-    values(formData).some(value => {
-      value && validCount++;
-      return null;
-    });
+    let validCount = values(formData).filter(value => value !== undefined).length;
 
     if (validCount !== size(formData)) {
       toast.warning("Completa todos los campos del formulario");
