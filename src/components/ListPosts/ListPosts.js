@@ -12,7 +12,6 @@ import "./ListPosts.scss";
 
 export default function ListPosts(props) {
   const { posts } = props;
-  console.log(posts.postimg);
   return (
     <div className="list-posts">
       {map(posts, (post, index, postimg) => (
@@ -27,7 +26,7 @@ function Post(props) {
   const { post, show } = props;
   const [userInfo, setUserInfo] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
-  
+  const [postImgUrl, setPostImgUrl] = useState(null);
 
 
   useEffect(() => {
@@ -38,7 +37,11 @@ function Post(props) {
           ? `${API_HOST}/obtenerAvatar?id=${response.id}`
           : AvatarNoFound
       );
+    setPostImgUrl(`${API_HOST}/obtenerPostImg?postImg=${post.postimg}`);
     });
+
+
+
   }, [post]);
 
 
@@ -58,8 +61,7 @@ function Post(props) {
 
           }}
         />
-        <Image className="postImg" src={avatarUrl} />
-
+        <Image className="postImg" src={postImgUrl} />
       </div>
     </div>
   );
