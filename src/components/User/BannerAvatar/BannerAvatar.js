@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import ConfigModal from "../../Modal/ConfigModal";
 import EditUserForm from "../../User/EditUserForm";
+import ResenaModal from "../../../components/Modal/ResenaModal";
+import ResenaListModal from "../../../components/Modal/ResenaListModal";
 import AvatarNoFound from "../../../assets/png/avatar-no-found.png";
 import { API_HOST } from "../../../utils/constant";
 import {
@@ -15,6 +17,9 @@ import "./BannerAvatar.scss";
 export default function BannerAvatar(props) {
   const { user, loggedUser } = props;
   const [showModal, setShowModal] = useState(false);
+  const [showResenaModal, setShowResenaModal] = useState(false);
+  const [showVerResenaModal, setShowVerResenaModal] = useState(false);
+  const [resenas, setResenas] = useState(null);
   const [following, setFollowing] = useState(null);
   const [reloadFollow, setReloadFollow] = useState(false);
   const bannerUrl = user?.banner
@@ -24,6 +29,7 @@ export default function BannerAvatar(props) {
     ? `${API_HOST}/obtenerAvatar?id=${user.id}`
     : AvatarNoFound;
 
+      console.log(showModal, setShowModal);
   useEffect(() => {
     if (user) {
       checkFollowApi(user?.id).then(response => {
@@ -49,6 +55,8 @@ export default function BannerAvatar(props) {
     });
   };
 
+
+
   return (
     <div
       className="banner-avatar"
@@ -65,13 +73,6 @@ export default function BannerAvatar(props) {
             <Button onClick={() => setShowModal(true)}>Editar perfil</Button>
           )} 
           </div>
-          <div>
-          {loggedUser._id === user.id && (
-            <Button onClick={() => setShowModal(true)}>Ver reseñas</Button>
-          )}
-          </div>
-          
-
           {loggedUser._id !== user.id &&
             following !== null &&
             (following ? (
@@ -79,11 +80,17 @@ export default function BannerAvatar(props) {
                 <span>Siguiendo</span>
               </Button>
             ) : (
-              <Button onClick={onFollow}>Seguir</Button>
+              <Button  onClick={onFollow}>Seguir</Button>
             ))}
+            
+            <Button onClick={() => setShowResenaModal(true)}>Escribe una reseña</Button>
+            <ResenaModal show={showResenaModal} setShow={setShowResenaModal}/>
+
+            <Button onClick={() => setShowVerResenaModal(true)}>Ver reseñas </Button>
+            <ResenaListModal show={showVerResenaModal} setShow={setShowVerResenaModal}/>
         </div>
       )}
-
+      
       <ConfigModal
         show={showModal}
         setShow={setShowModal}
@@ -91,6 +98,8 @@ export default function BannerAvatar(props) {
       >
         <EditUserForm user={user} setShowModal={setShowModal} />
       </ConfigModal>
+
+      
     </div>
   );
 }

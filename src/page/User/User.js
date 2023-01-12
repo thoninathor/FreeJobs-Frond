@@ -16,6 +16,7 @@ function User(props) {
   const { match, setRefreshCheckLogin } = props;
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState(null);
+  
   const [page, setPage] = useState(1);
   const [loadingPosts, setLoadingPosts] = useState(false);
   const { params } = match;
@@ -31,6 +32,16 @@ function User(props) {
       })
       .catch(() => {
         toast.error("El usuario que has visitado no existe");
+      });
+  }, [params]);
+
+  useEffect(() => {
+    getUserPostsApi(params.id, 1)
+      .then((response) => {
+        setPosts(response);
+      })
+      .catch(() => {
+        setPosts([]);
       });
   }, [params]);
 

@@ -8,24 +8,24 @@ import { getUserApi } from "../../api/user";
 import { replaceURLWithHTMLLinks } from "../../utils/functions";
 
 export default function ListResna(props) {
-   const { posts } = props;
+   const { resenas } = props;
 
   return (
     <div className="list-posts">
-      {map(posts, (post, index) => (
-        <Post key={index} post={post} />
+      {map(resenas, (resena, index) => (
+        <Resena key={index} resena={resena} />
       ))}
     </div>
   );
 }
 
-function Post(props) {
-  const { post } = props;
+function Resena(props) {
+  const { resena } = props;
   const [userInfo, setUserInfo] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
 
   useEffect(() => {
-    getUserApi(post.userId).then((response) => {
+    getUserApi(resena.userId).then((response) => {
       setUserInfo(response);
       setAvatarUrl(
         response?.avatar
@@ -33,7 +33,7 @@ function Post(props) {
           : AvatarNoFound
       );
     });
-  }, [post]);
+  }, [resena]);
 
   return (
     <div className="post">
@@ -41,15 +41,14 @@ function Post(props) {
       <div>
         <div className="name">
           {userInfo?.nombre} {userInfo?.apellidos}
-          <span>{moment(post.fecha).calendar()}</span>
+          <span>{moment(resena.fecha).calendar()}</span>
         </div>
         <div
           dangerouslySetInnerHTML={{
-            __html: replaceURLWithHTMLLinks(post.mensaje),
+            __html: replaceURLWithHTMLLinks(resena.mensaje),
 
           }}
         />
-        <Image className="postImg" src={avatarUrl} />
       </div>
     </div>
   );

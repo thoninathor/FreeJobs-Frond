@@ -46,6 +46,8 @@ export default function LeftMenu(props) {
       <Button onClick={() => setShowModal(true)}>Postea tu trabajo</Button>
 
       <PostModal show={showModal} setShow={setShowModal} />
+
+
     </div>
   );
 }

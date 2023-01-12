@@ -16,7 +16,7 @@ export default function ListPosts(props) {
   return (
     <div className="list-posts">
       {map(posts, (post, index, postimg) => (
-        <Post key={index} post={post} postimg={postimg[index]}/>
+        <Post key={index} post={post} postimg={postimg[index]} />
       ))}
     </div>
   );
@@ -24,7 +24,7 @@ export default function ListPosts(props) {
 
 function Post(props) {
   console.log(props);
-  const { post } = props;
+  const { post, show } = props;
   const [userInfo, setUserInfo] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
   
@@ -45,7 +45,7 @@ function Post(props) {
   
 
   return (
-    <div className="post">
+    <div className="post" show={show} >
       <Image className="avatar" src={avatarUrl} roundedCircle />
       <div>
         <div className="name">

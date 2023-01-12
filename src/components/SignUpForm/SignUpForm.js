@@ -198,13 +198,8 @@ function initialFormValue() {
         nombre:"",
         apellidos:"",
         repeatPassword: "",
-<<<<<<< HEAD
         isOfer: null,
         fechaNacimiento: "",
-=======
-        isOfer: false,
-        fechaNacimiento: new Date(),
->>>>>>> 045fda9a8a38468db4d330c6e3cf432864d429fd
         phone :"", 
         ubicacion:"",
   };

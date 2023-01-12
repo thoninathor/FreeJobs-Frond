@@ -1,48 +1,23 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import classNames from "classnames";
-import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import { Close } from "../../../utils/Icons";
-import { addPostApi } from "../../../api/post";
-import { API_HOST } from "../../../utils/constant";
-import {uploadPostApi} from "../../../api/post";
-import {Camera} from "../../../utils/Icons";
+import {  addResenaApi } from "../../../api/resena";
 
-import "./PostModal.scss";
+import "./ResenaModal.scss";
 
-export default function PostModal(props) {
+export default function ResenaModal(props) {
   const { show, setShow } = props;
   const [message, setMessage] = useState("");
-
-  const [postURl, setPostURl] = useState(null);
+  const [calificacion, setCalificacion] = useState("10");
   const maxLength = 280;
 
-  const [postFile, setPostFlie] = useState(null);
-
-  const  onDropPost = useCallback(acceptedFile => {
-    const file = acceptedFile[0];
-    console.log(URL.createObjectURL(file));
-    setPostURl(URL.createObjectURL(file));
-    setPostFlie(file);
-    console.log(acceptedFile);
-  });
-  const {getRootProps: getRootPostProps, getInputProps: getInputPostProps} = useDropzone({
-    accept: "image/jpeg, image/png",
-    noKeyboard:true,
-    multiple:  false,
-    onDrop: onDropPost
-  });
-
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (postFile) {
-      await uploadPostApi(postFile).catch(() => {
-        toast.error("Error al subir el nuevo banner");
-      });
-    }
+
     if (message.length > 0 && message.length <= maxLength) {
-      addPostApi(message)
+      addResenaApi(message, calificacion)
         .then((response) => {
           console.log(response);
           if (response?.code >= 200 && response?.code < 300) {
@@ -52,7 +27,7 @@ export default function PostModal(props) {
           }
         })
         .catch(() => {
-          toast.warning("Erorr al enviar el post, inténtelo más tarde.");
+          toast.warning("Erorr al enviar el tweet, inténtelo más tarde.");
         });
     }
   };
@@ -71,11 +46,6 @@ export default function PostModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="banner" style={{ backgroundImage: `url('${postURl}')` }} {...getRootPostProps()} >
-            <input {...getInputPostProps()}/>
-            <Camera/>
-        </div>
-
         <Form onSubmit={onSubmit}>
           <Form.Control
             as="textarea"
@@ -90,12 +60,14 @@ export default function PostModal(props) {
           >
             {message.length}
           </span>
+          <input type="number" onChange={(e) => setCalificacion(e.target.value)}  />
           <Button
             type="submit"
             disabled={message.length > maxLength || message.length < 1}
           >
-            Postear
+            Subir reseña
           </Button>
+          
         </Form>
       </Modal.Body>
     </Modal>

@@ -1,6 +1,30 @@
 import { API_HOST } from "../utils/constant";
 import { getTokenApi } from "./auth";
 
+export async function uploadAndGetObjects(mesaje, postFile) {
+  // Primero subimos el objeto al servidor utilizando una llamada POST
+  
+  const objectToUpload = { /* ... */ };
+  const response = await fetch('/api/objects', {
+    method: 'POST',
+    body: JSON.stringify(objectToUpload),
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const uploadedObject = await response.json();
+
+  // Luego obtenemos la lista de objetos utilizando una llamada GET
+  const listResponse = await fetch('/api/objects');
+  const objectList = await listResponse.json();
+
+  // Finalmente utilizamos el ID del objeto seleccionado para hacer otra llamada GET
+  const singleObjectResponse = await fetch(`/api/objects/${selectedId}`);
+  const singleObject = await singleObjectResponse.json();
+
+  // Aquí podrías hacer algo con el objeto obtenido
+  console.log(singleObject);
+}
+
+
 export function addPostApi(mensaje) {
   const url = `${API_HOST}/post`;
   const data = {
