@@ -22,7 +22,7 @@ function User(props) {
   const { params } = match;
   const loggedUser = useAuth();
   
-  console.log(props);
+  console.log(params);
 
   useEffect(() => {
     getUserApi(params.id)
@@ -45,15 +45,6 @@ function User(props) {
       });
   }, [params]);
 
-  useEffect(() => {
-    getUserPostsApi(params.id, 1)
-      .then((response) => {
-        setPosts(response);
-      })
-      .catch(() => {
-        setPosts([]);
-      });
-  }, [params]);
 
   const moreData = () => {
     const pageTemp = page + 1;
@@ -77,7 +68,7 @@ function User(props) {
           {user ? `${user.nombre} ${user.apellidos}` : "Este usuario no existe"}
         </h2>
       </div>
-      <BannerAvatar user={user} loggedUser={loggedUser} />
+      <BannerAvatar user={user} loggedUser={loggedUser} params={params} />
       <InfoUser user={user} />
       <div className="user__posts">
         <h3>Post</h3>

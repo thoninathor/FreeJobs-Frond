@@ -15,11 +15,11 @@ import {
 import "./BannerAvatar.scss";
 
 export default function BannerAvatar(props) {
-  const { user, loggedUser } = props;
+  const { user, loggedUser, params } = props;
   const [showModal, setShowModal] = useState(false);
   const [showResenaModal, setShowResenaModal] = useState(false);
   const [showVerResenaModal, setShowVerResenaModal] = useState(false);
-  const [resenas, setResenas] = useState(null);
+
   const [following, setFollowing] = useState(null);
   const [reloadFollow, setReloadFollow] = useState(false);
   const bannerUrl = user?.banner
@@ -87,7 +87,7 @@ export default function BannerAvatar(props) {
             <ResenaModal show={showResenaModal} setShow={setShowResenaModal}/>
 
             <Button onClick={() => setShowVerResenaModal(true)}>Ver reseñas </Button>
-            <ResenaListModal show={showVerResenaModal} setShow={setShowVerResenaModal}/>
+            <ResenaListModal show={showVerResenaModal} setShow={setShowVerResenaModal} params={params}/>
         </div>
       )}
       
