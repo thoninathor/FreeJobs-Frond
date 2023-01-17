@@ -17,6 +17,8 @@ export default function SignUpForm(props) {
   const { user, setShowModal } = props;
   const [formData, setFormData] = useState(initialFormValue(user));
   const [signUpLoading, setSignUpLoading] = useState(false);
+
+  const [reloadOferente, setReloadOferente] = useState(null);
  
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition(
@@ -45,11 +47,7 @@ export default function SignUpForm(props) {
   const onSubmit = e => {
     e.preventDefault();
 
-    let validCount = 0;
-    values(formData).some(value => {
-      value && validCount++;
-      return null;
-    });
+    let validCount = values(formData).filter(value => value !== undefined).length;
 
     if (validCount !== size(formData)) {
       toast.warning("Completa todos los campos del formulario");
@@ -98,9 +96,20 @@ export default function SignUpForm(props) {
     setFormData({ ...formData, fechaNacimiento: date });
   }
 
+  const onSolicitante = () => {
+    toggleBoolean();
+    setReloadOferente(false)
+  };
+
+  const onOferente = () => {
+    toggleBoolean();
+    setReloadOferente(true)
+  };
+
   useEffect(() => {
     getLocation();
-  }, []);
+    setReloadOferente(true);
+  }, [reloadOferente]);
 
 
   return (
@@ -166,9 +175,16 @@ export default function SignUpForm(props) {
               />
             </Col>
             <Col>
-            <Button className="boton2" onClick = {toggleBoolean}>
-                Ofertante   ?
-            </Button>
+            
+              {
+              (formData.isOfer ? (
+                <Button onClick={onSolicitante} className="boton2">
+                  <span>Oferente</span>
+                </Button>
+              ) : (
+                <Button onClick={onOferente} className="boton2">Solicitante</Button>
+              ))}
+
             </Col>
           </Row>
         </Form.Group>
@@ -198,8 +214,8 @@ function initialFormValue() {
         nombre:"",
         apellidos:"",
         repeatPassword: "",
-        isOfer: null,
-        fechaNacimiento: "",
+        isOfer: false,
+        fechaNacimiento: new Date(),
         phone :"", 
         ubicacion:"",
   };

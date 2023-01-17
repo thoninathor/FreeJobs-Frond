@@ -69,7 +69,7 @@ function User(props) {
         </h2>
       </div>
       <BannerAvatar user={user} loggedUser={loggedUser} params={params} />
-      <InfoUser user={user} />
+      <InfoUser user={user} loggedUser={loggedUser} />
       <div className="user__posts">
         <h3>Post</h3>
         {posts && <ListPosts posts={posts} />}

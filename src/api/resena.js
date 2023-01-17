@@ -1,13 +1,15 @@
 import { API_HOST } from "../utils/constant";
 import { getTokenApi } from "./auth";
 
-export function addResenaApi(mensaje, calificacion) {
+export function addResenaApi(mensaje, calificacion, user) {
   const url = `${API_HOST}/resena`;
   const data = {
     mensaje,
     calificacion,
+    userresenaid: user.id,
   };
   console.log(mensaje);
+  console.log(data);
   const params = {
     method: "POST",
     headers: {

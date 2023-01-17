@@ -72,6 +72,7 @@ function formatModel(posts) {
       userId: post.userRelationId,
       mensaje: post.Post.mensaje,
       fecha: post.Post.fecha,
+      postimg: post.Post.postimg,
     });
   });
   

@@ -6,13 +6,14 @@ import { toast } from "react-toastify";
 import { Close } from "../../../utils/Icons";
 import { addPostApi } from "../../../api/post";
 import { API_HOST } from "../../../utils/constant";
-import {uploadPostApi} from "../../../api/post";
+import {uploadPostApi, uploadAndGetPosts} from "../../../api/post";
 import {Camera} from "../../../utils/Icons";
 
 import "./PostModal.scss";
 
 export default function PostModal(props) {
-  const { show, setShow } = props;
+  console.log(props)
+  const { show, setShow, userId } = props;
   const [message, setMessage] = useState("");
 
   const [postURl, setPostURl] = useState(null);
@@ -36,13 +37,8 @@ export default function PostModal(props) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (postFile) {
-      await uploadPostApi(postFile).catch(() => {
-        toast.error("Error al subir el nuevo banner");
-      });
-    }
     if (message.length > 0 && message.length <= maxLength) {
-      addPostApi(message)
+      uploadAndGetPosts(message, postFile, userId, 1)
         .then((response) => {
           console.log(response);
           if (response?.code >= 200 && response?.code < 300) {
