@@ -45,11 +45,11 @@ function Resena(props) {
         </div>
         <div
           dangerouslySetInnerHTML={{
-            __html: replaceURLWithHTMLLinks(resena.mensaje, resena.calificacion),
+            __html: replaceURLWithHTMLLinks(resena.mensaje),
           }}
         />
         <div>
-          
+          Calificacion: {resena.calificacion !== 1 ? resena.calificacion + " Estrellas" : resena.calificacion + " Estrella"}
         </div>
       </div>
     </div>

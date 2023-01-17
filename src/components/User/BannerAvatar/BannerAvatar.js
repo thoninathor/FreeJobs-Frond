@@ -14,6 +14,7 @@ import {
 
 import "./BannerAvatar.scss";
 
+
 export default function BannerAvatar(props) {
   const { user, loggedUser, params } = props;
   const [showModal, setShowModal] = useState(false);
@@ -46,12 +47,14 @@ export default function BannerAvatar(props) {
   const onFollow = () => {
     followUserApi(user.id).then(() => {
       setReloadFollow(true);
+      window.location.reload();
     });
   };
 
   const onUnfollow = () => {
     unfollowUserApi(user.id).then(() => {
       setReloadFollow(true);
+      window.location.reload();
     });
   };
 
@@ -80,7 +83,7 @@ console.log(params);
                 <span>Siguiendo</span>
               </Button>
             ) : (
-              <Button  onClick={onFollow}>Seguir</Button>
+              <Button onClick={onFollow}>Seguir</Button>
             ))}
             
             {loggedUser._id !== user.id && following ?

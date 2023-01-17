@@ -1,8 +1,9 @@
 import { API_HOST } from "../utils/constant";
 import { getTokenApi } from "./auth";
 
-export function addResenaApi(mensaje, calificacion, user) {
+export function addResenaApi(mensaje, calif, user) {
   const url = `${API_HOST}/resena`;
+  const calificacion = Number(calif);
   const data = {
     mensaje,
     calificacion,

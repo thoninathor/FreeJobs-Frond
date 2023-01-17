@@ -10,15 +10,15 @@ import "./ResenaModal.scss";
 export default function ResenaModal(props) {
   const { show, setShow, user } = props;
   const [message, setMessage] = useState("");
-  const [calificacion, setCalificacion] = useState("10");
+  const [calif, setCalificacion] = useState();
   const maxLength = 280;
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     if (message.length > 0 && message.length <= maxLength) {
-      console.log(message, calificacion, user);
-      addResenaApi(message, calificacion, user)
+      console.log(message, calif, user);
+      addResenaApi(message, calif, user)
         .then((response) => {
           console.log(response);
           if (response?.code >= 200 && response?.code < 300) {
@@ -61,7 +61,7 @@ export default function ResenaModal(props) {
           >
             {message.length}
           </span>
-          <input type="number" onChange={(e) => setCalificacion(e.target.value)}  />
+          <div className="calificacion">Calificacion: <input className="numerocalif" type="number" max="5" min="0" onChange={(e) => setCalificacion(e.target.value)}/>Estrellas</div>
           <Button
             type="submit"
             disabled={message.length > maxLength || message.length < 1}

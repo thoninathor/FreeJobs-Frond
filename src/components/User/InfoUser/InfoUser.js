@@ -11,7 +11,7 @@ import "./InfoUser.scss";
 export default function InfoUser(props) {
   const { user, loggedUser} = props;
 
-  const [following, setFollowing] = useState(null);
+  const [following, setFollowing] = useState(false);
   const [reloadFollow, setReloadFollow] = useState(false);
 
   useEffect(() => {

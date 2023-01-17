@@ -88,7 +88,7 @@ export default function PostModal(props) {
           </span>
           <Button
             type="submit"
-            disabled={message.length > maxLength || message.length < 1}
+            disabled={message.length > maxLength || message.length < 1 || postURl === null}
           >
             Postear
           </Button>
