@@ -27,9 +27,6 @@ function Post(props) {
   const { post, show } = props;
   const [userInfo, setUserInfo] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
-  
-
-
   useEffect(() => {
     getUserApi(post.userId).then((response) => {
       setUserInfo(response);
@@ -40,10 +37,6 @@ function Post(props) {
       );
     });
   }, [post]);
-
-
-  
-
   return (
     <div className="post" show={show} >
       <Image className="avatar" src={avatarUrl} roundedCircle />
