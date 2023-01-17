@@ -68,7 +68,7 @@ export default function ResenaListModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-      {resenas && <ListResna resenas={resenas} />}
+      {resenas && <ListResna resenas={resenas} params={params}/>}
       </Modal.Body>
 
     </Modal>

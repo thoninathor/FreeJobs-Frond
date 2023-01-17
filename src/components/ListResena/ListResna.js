@@ -8,7 +8,7 @@ import { getUserApi } from "../../api/user";
 import { replaceURLWithHTMLLinks } from "../../utils/functions";
 
 export default function ListResna(props) {
-   const { resenas } = props;
+   const { resenas, params } = props;
 
   return (
     <div className="list-posts">

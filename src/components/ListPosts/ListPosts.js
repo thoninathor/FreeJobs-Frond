@@ -26,9 +26,12 @@ function Post(props) {
   const { post, show } = props;
   const [userInfo, setUserInfo] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
+<<<<<<< HEAD
+=======
   const [postImgUrl, setPostImgUrl] = useState(null);
 
 
+>>>>>>> refs/remotes/tuiter/master
   useEffect(() => {
     getUserApi(post.userId).then((response) => {
       setUserInfo(response);
@@ -43,10 +46,6 @@ function Post(props) {
 
 
   }, [post]);
-
-
-  
-
   return (
     <div className="post" show={show} >
       <Image className="avatar" src={avatarUrl} roundedCircle />
