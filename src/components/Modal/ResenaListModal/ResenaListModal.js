@@ -9,7 +9,7 @@ import ListResna from '../../ListResena/ListResna';
 import "./ResenaListModal.scss";
 
 export default function ResenaListModal(props) {
-    const { show, setShow, params } = props;
+    const { show, setShow, params, userResena } = props;
     const [user, setUser] = useState(null);
     const [loadingResenas, setLoadingResenas] = useState(false);
     const [resenas, setResenas] = useState(null);

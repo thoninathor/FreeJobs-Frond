@@ -8,7 +8,7 @@ import {  addResenaApi } from "../../../api/resena";
 import "./ResenaModal.scss";
 
 export default function ResenaModal(props) {
-  const { show, setShow } = props;
+  const { show, setShow, user } = props;
   const [message, setMessage] = useState("");
   const [calificacion, setCalificacion] = useState("10");
   const maxLength = 280;
@@ -17,7 +17,8 @@ export default function ResenaModal(props) {
     e.preventDefault();
 
     if (message.length > 0 && message.length <= maxLength) {
-      addResenaApi(message, calificacion)
+      console.log(message, calificacion, user);
+      addResenaApi(message, calificacion, user)
         .then((response) => {
           console.log(response);
           if (response?.code >= 200 && response?.code < 300) {
@@ -27,7 +28,7 @@ export default function ResenaModal(props) {
           }
         })
         .catch(() => {
-          toast.warning("Erorr al enviar el tweet, inténtelo más tarde.");
+          toast.warning("Error al enviar el tweet, inténtelo más tarde.");
         });
     }
   };

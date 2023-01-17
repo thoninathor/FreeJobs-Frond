@@ -55,7 +55,7 @@ export default function BannerAvatar(props) {
     });
   };
 
-
+console.log(params);
 
   return (
     <div
@@ -85,10 +85,11 @@ export default function BannerAvatar(props) {
             
             {loggedUser._id !== user.id && following ?
               (<Button onClick={() => setShowResenaModal(true)}>Escribe una reseña</Button>) : ('')}
-            <ResenaModal show={showResenaModal} setShow={setShowResenaModal}/>
+            <ResenaModal show={showResenaModal} setShow={setShowResenaModal} user = {user}/>
+
 
             <Button onClick={() => setShowVerResenaModal(true)}>Ver reseñas </Button>
-            <ResenaListModal show={showVerResenaModal} setShow={setShowVerResenaModal} params={params}/>
+            <ResenaListModal show={showVerResenaModal} setShow={setShowVerResenaModal} userResena = {user} params={params}/>
         </div>
       )}
       
