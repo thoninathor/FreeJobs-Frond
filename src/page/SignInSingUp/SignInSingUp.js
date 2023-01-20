@@ -51,7 +51,7 @@ function LeftComponent() {
       <div>
         <h2>
           <FontAwesomeIcon icon={faSearch} />
-          Busca profesionistas.
+          Busca oferentes de servicios.
         </h2>
         <h2>
           <FontAwesomeIcon icon={faUsers} />
@@ -73,8 +73,8 @@ function RightComponent(props) {
     <Col className="signin-signup__right" xs={6}>
       <div>
         <img src={LogoWhiteFreeJobs} alt="FreeJobs" />
-        <h2>Encuentra al profesionista que necesitas</h2>
-        <h3>Únete a FreeJobs hoy mimso.</h3>
+        <h2>Encuentra al experto que necesitas</h2>
+        <h3>Únete a FreeJobs hoy mismo.</h3>
         <Button
           variant="primary"
           onClick={() => openModal(<SignUpForm setShowModal={setShowModal} />)}
