@@ -4,6 +4,8 @@ import { values, size } from "lodash";
 import { toast } from "react-toastify";
 import { isEmailValid } from "../../utils/validations";
 import { signInApi, setTokenApi } from "../../api/auth";
+import PasModal from "../../components/Modal/PasModal";
+
 
 import "./SignInForm.scss";
 
@@ -11,6 +13,7 @@ export default function SignInForm(props) {
   const { setRefreshCheckLogin } = props;
   const [formData, setFormData] = useState(initialFormValue());
   const [signInLoading, setSignInLoading] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -70,6 +73,10 @@ export default function SignInForm(props) {
             placeholder="Contraseña"
             defaultValue={formData.password}
           />
+        </Form.Group>
+        <Form.Group>
+          <Button onClick={() => setShowPasswordModal(true)}>Olvidaste tu contraseña ? </Button>
+          <PasModal show={showPasswordModal} setShow={setShowPasswordModal} />
         </Form.Group>
         <Button variant="primary" type="submit" >
           {!signInLoading ? "Iniciar sesión" : <Spinner animation="border" />}

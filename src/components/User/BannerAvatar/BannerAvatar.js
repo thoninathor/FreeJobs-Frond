@@ -88,7 +88,7 @@ console.log(params);
             
             {loggedUser._id !== user.id && following ?
               (<Button onClick={() => setShowResenaModal(true)}>Escribe una reseña</Button>) : ('')}
-            <ResenaModal show={showResenaModal} setShow={setShowResenaModal} user = {user}/>
+              <ResenaModal show={showResenaModal} setShow={setShowResenaModal} user = {user}/>
 
 
             <Button onClick={() => setShowVerResenaModal(true)}>Ver reseñas </Button>
