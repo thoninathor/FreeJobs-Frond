@@ -7,6 +7,9 @@ import { API_HOST } from "../../utils/constant";
 import { getUserApi } from "../../api/user";
 import {uploadPostApi} from "../../api/post";
 import { replaceURLWithHTMLLinks } from "../../utils/functions";
+import { Close } from "../../utils/Icons";
+import { toast } from "react-toastify";
+import axios from 'axios';
 
 import "./ListPosts.scss";
 
@@ -21,13 +24,36 @@ export default function ListPosts(props) {
   );
 }
 
+const deletePost = (postId) => {
+  deletePostApi(postId)
+    .then((response) => {
+      // Actualizar el estado de los posts para reflejar la eliminación del post
+      if (response?.code >= 200 && response?.code < 300){
+        toast.success("Post borrado");
+        window.location.reload();
+      }
+    })
+    .catch(() => {
+      // Mostrar un mensaje de error utilizando una librería como Toastify
+      toast.error("Error al borrar");
+    });
+}
+
+const deletePostApi = async (postId) => {
+  try {
+      const response = await axios.delete(`${postId}`);
+      return response;
+  } catch (error) {
+      console.log(error);
+  }
+}
+
 function Post(props) {
   console.log(props);
   const { post, show } = props;
   const [userInfo, setUserInfo] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(null);
   const [postImgUrl, setPostImgUrl] = useState(null);
-
 
   useEffect(() => {
     getUserApi(post.userId).then((response) => {
@@ -45,6 +71,7 @@ function Post(props) {
   }, [post]);
   return (
     <div className="post" show={show} >
+      <Close onClick={() => deletePost(post.id)}/>
       <Image className="avatar" src={avatarUrl} roundedCircle />
       <div>
         <div className="name">

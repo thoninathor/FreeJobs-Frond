@@ -1,6 +1,7 @@
 import { API_HOST } from "../utils/constant";
 import { getTokenApi } from "./auth";
 
+
 export async function uploadAndGetPosts(mensaje, postFile, idUser, page) {
   // Primero subimos el objeto al servidor utilizando una llamada POST
   const urlPubPost = `${API_HOST}/post`;

@@ -22,7 +22,7 @@ function User(props) {
   const { params } = match;
   const loggedUser = useAuth();
   
-  console.log(params);
+  console.log(user);
 
   useEffect(() => {
     getUserApi(params.id)
@@ -35,6 +35,11 @@ function User(props) {
       });
   }, [params]);
 
+  {user && !user.biografia && (
+    toast.info("Completa tu perfil para darte a conocer")
+  )}
+  
+
   useEffect(() => {
     getUserPostsApi(params.id, 1)
       .then((response) => {
@@ -44,7 +49,6 @@ function User(props) {
         setPosts([]);
       });
   }, [params]);
-
 
   const moreData = () => {
     const pageTemp = page + 1;
