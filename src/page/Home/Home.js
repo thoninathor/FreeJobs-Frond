@@ -38,6 +38,7 @@ import "./Home.scss";
             console.log(coordenadasJSON)
             const url = `${API_HOST}/modificarPerfil`;
             const data = {
+                fechaNacimiento: user.fechaNacimiento,
                 coordenadasActual: coordenadasJSON,
             }
             console.log(data)
