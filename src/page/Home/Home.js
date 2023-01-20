@@ -9,6 +9,7 @@ import { getUserApi } from "../../api/user";
 import { getPostsFollowersApi } from "../../api/post";
 import { toast } from "react-toastify";
 import { getTokenApi } from "../../api/auth";
+import axios from "axios";
 import { API_HOST } from "../../utils/constant";
 
 import "./Home.scss";
@@ -20,43 +21,40 @@ import "./Home.scss";
   const [posts, setPosts] = useState(null);
   const [page, setPage] = useState(1);
   const [loadingPosts, setLoadingPosts] = useState(false);
+  const user = useAuth();
 
-  const getLocation = async ()  => {
-     await navigator.geolocation.getCurrentPosition(
-      position => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          const locationString = `${latitude}, ${longitude}`;
-          console.log("locacion")
-          console.log(locationString)
-          const url = `${API_HOST}/modificarPerfil`;
-          const data={
-            coordenadasActual:locationString,
-          }
-          console.log(data)
-          const params = {
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${getTokenApi()}`
-            },
-            body: JSON.stringify(data)
-            
-          };
-          console.log("body")
-          console.log(params.body);
-          return fetch(url, params)
-            .then(response => {
-              return response;
-            })
-            .catch(err => {
-              return err;
-            });
-      },
-      error => {
-          console.log(error);
-      }
+  console.log(user.coordenadasActual);
+
+  const getLocation = async () => {
+     navigator.geolocation.getCurrentPosition(
+        position => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const locationString = `${latitude}, ${longitude}`;
+            console.log("locacion")
+            console.log(locationString)
+            const url = `${API_HOST}/modificarPerfil`;
+            const data = {
+                coordenadasActual: locationString,
+            }
+            console.log(data)
+            const headers = {
+                Authorization: `Bearer ${getTokenApi()}`,
+            }
+            axios.put(url, data, { headers })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        error => {
+            console.log(error);
+        }
     );
-  };
+};
+
 
   useEffect(() => {
     getLocation();
@@ -81,7 +79,6 @@ import "./Home.scss";
 
 
   const moreData = () => {
-    
     setLoadingPosts(true);
     setPage(page + 1);
   };
