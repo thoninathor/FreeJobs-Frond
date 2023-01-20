@@ -47,7 +47,6 @@ export function signInApi(user) {
     },
     body: JSON.stringify(data)
   };
-
   return fetch(url, params)
     .then(response => {
       if (response.status >= 200 && response.status < 300) {

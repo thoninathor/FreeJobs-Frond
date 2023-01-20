@@ -96,8 +96,11 @@ export default function SignUpForm(props) {
               .then(response => {
                 const ubicacionFiltrar = response.data.results[0].formatted_address;
                 const ubicacion = ubicacionFiltrar.replace(/^.*?,.*?,/, '').replace(/\d+ /, '')
-                const locationString = `${latitude}, ${longitude}`;
-                setFormData({...formData, coordenadas: locationString , ubicacion: ubicacion, coordenadasActual: locationString});
+                const coordenadasJSON = {
+                  type: "Point",
+                  coordinates: [longitude, latitude]
+                };
+                setFormData({...formData, coordenadas: coordenadasJSON , ubicacion: ubicacion, coordenadasActual: coordenadasJSON});
               })
               .catch(err => {
                   console.log(err);

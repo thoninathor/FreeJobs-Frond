@@ -105,9 +105,10 @@ export default function EditUserForm(props) {
                   const ubicacion = ubicacionFiltrar.replace(/^.*?,.*?,/, '').replace(/\d+ /, '')
                   setFormData({...formData, ubicacion: ubicacion})
                   console.log(ubicacion)
-                  const locationString = `${latitude}, ${longitude}`;
-                  setFormData({...formData, coordenadas: locationString});
-                  console.log(locationString);
+                  const coordenadasJSON = {
+                    type: "Point",
+                    coordinates: [longitude, latitude]
+                  };                  setFormData({...formData, coordenadas: coordenadasJSON});
                   console.log(formData);
                 })
                 .catch(err => {
@@ -223,7 +224,7 @@ function initialValue(user) {
     biografia: user.biografia || "",
     ubicacion: user.ubicacion || "",
     sitioWeb: user.sitioWeb || "",
-    fechaNacimiento: user.fechaNacimiento || "",
+    fechaNacimiento: user.fechaNacimiento,
     coordenadas : user.coordenadas || "",
   };
 }

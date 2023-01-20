@@ -27,6 +27,7 @@ function Users(props) {
   useEffect(() => {
     getFollowsApi(queryString.stringify(params))
       .then((response) => {
+        console.log(response)
         // eslint-disable-next-line eqeqeq
         if (params.page == 1) {
           if (isEmpty(response)) {

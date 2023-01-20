@@ -30,12 +30,15 @@ import "./Home.scss";
         position => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            const locationString = `${latitude}, ${longitude}`;
+            const coordenadasJSON = {
+              type: "Point",
+              coordinates: [longitude, latitude]
+            };
             console.log("locacion")
-            console.log(locationString)
+            console.log(coordenadasJSON)
             const url = `${API_HOST}/modificarPerfil`;
             const data = {
-                coordenadasActual: locationString,
+                coordenadasActual: coordenadasJSON,
             }
             console.log(data)
             const headers = {

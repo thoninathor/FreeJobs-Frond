@@ -68,13 +68,13 @@ export function unfollowUserApi(idUser) {
 
 export function getFollowsApi(paramsUrl) {
   const url = `${API_HOST}/listaUsuarios?${paramsUrl}`;
-
+console.log("paramsUrl")
   const params = {
     headers: {
-      Authorization: `Bearer ${getTokenApi()}`,
+      Authorization: `Bearer${getTokenApi()}`,
     },
   };
-
+console.log(params)
   return fetch(url, params)
     .then((response) => {
       return response.json();
