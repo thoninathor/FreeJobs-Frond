@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
 import { values, size } from "lodash";
 import { toast } from "react-toastify";
+import { updateInfoApi } from "../../api/user";
 import { isEmailValid } from "../../utils/validations";
 import { signUpApi } from "../../api/auth";
 import axios from "axios";
@@ -20,28 +21,7 @@ export default function SignUpForm(props) {
 
   const [reloadOferente, setReloadOferente] = useState(null);
  
-  const getLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-        position => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            const API_KEY = "AIzaSyAiX028Ae0mth3rt13hBdXOjHv1SiT4plk";
-            axios
-                .get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`)
-                .then(response => {
-                  const ubicacionFiltrar = response.data.results[0].formatted_address;
-                  const ubicacion = ubicacionFiltrar.replace(/^.*?,.*?,/, '').replace(/\d+ /, '')
-                  setFormData({...formData, ubicacion: ubicacion})
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        },
-        error => {
-            console.log(error);
-        }
-    );
-  };
+
 
 
   const onSubmit = e => {
@@ -105,6 +85,30 @@ export default function SignUpForm(props) {
     toggleBoolean();
     setReloadOferente(true)
   };
+  const getLocation = () => {   
+    navigator.geolocation.getCurrentPosition(
+      position => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const API_KEY = "AIzaSyAiX028Ae0mth3rt13hBdXOjHv1SiT4plk";
+          axios
+              .get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`)
+              .then(response => {
+                const ubicacionFiltrar = response.data.results[0].formatted_address;
+                const ubicacion = ubicacionFiltrar.replace(/^.*?,.*?,/, '').replace(/\d+ /, '')
+                const locationString = `${latitude}, ${longitude}`;
+                setFormData({...formData, coordenadas: locationString , ubicacion: ubicacion, coordenadasActual: locationString});
+              })
+              .catch(err => {
+                  console.log(err);
+              });
+      },
+      error => {
+          console.log(error);
+      }
+  );
+};
+
 
   useEffect(() => {
     getLocation();
@@ -218,5 +222,7 @@ function initialFormValue() {
         fechaNacimiento: new Date(),
         phone :"", 
         ubicacion:"",
+        coordenadas: "",
+        coordenadasActual: "",
   };
 }

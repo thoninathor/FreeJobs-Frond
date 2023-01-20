@@ -26,6 +26,9 @@ export default function InfoUser(props) {
     }
     setReloadFollow(false);
   }, [user, reloadFollow]);
+  const viewLocationModal = () => {
+    
+  };
   
   console.log(following)
 
@@ -57,7 +60,7 @@ export default function InfoUser(props) {
         )}
         {user?.fechaNacimiento && (
           <p>
-            <Ubicacion />
+            <Ubicacion onClick={viewLocationModal}/>
             {user.ubicacion}
           </p>
         )}

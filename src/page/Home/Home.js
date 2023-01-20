@@ -1,21 +1,67 @@
 import React, { useState, useEffect } from "react";
+import { updateInfoApi } from "../../api/user";
 import { Button, Spinner } from "react-bootstrap";
 import BasicLayout from "../../layout/BasicLayout";
 import ListPosts from "../../components/ListPosts";
+import { withRouter } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { getUserApi } from "../../api/user";
 import { getPostsFollowersApi } from "../../api/post";
+import { toast } from "react-toastify";
+import { getTokenApi } from "../../api/auth";
+import { API_HOST } from "../../utils/constant";
 
 import "./Home.scss";
 
-export default function Home(props) {
+
+ export default function Home(props) {
+  
   const { setRefreshCheckLogin } = props;
   const [posts, setPosts] = useState(null);
   const [page, setPage] = useState(1);
   const [loadingPosts, setLoadingPosts] = useState(false);
 
+  const getLocation = async ()  => {
+     await navigator.geolocation.getCurrentPosition(
+      position => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const locationString = `${latitude}, ${longitude}`;
+          console.log("locacion")
+          console.log(locationString)
+          const url = `${API_HOST}/modificarPerfil`;
+          const data={
+            coordenadasActual:locationString,
+          }
+          console.log(data)
+          const params = {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${getTokenApi()}`
+            },
+            body: JSON.stringify(data)
+            
+          };
+          console.log("body")
+          console.log(params.body);
+          return fetch(url, params)
+            .then(response => {
+              return response;
+            })
+            .catch(err => {
+              return err;
+            });
+      },
+      error => {
+          console.log(error);
+      }
+    );
+  };
+
   useEffect(() => {
+    getLocation();
     getPostsFollowersApi(page)
       .then((response) => {
-        console.log(response);
         if (!posts && response) {
           setPosts(formatModel(response));
         } else {
@@ -32,7 +78,10 @@ export default function Home(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
+
+
   const moreData = () => {
+    
     setLoadingPosts(true);
     setPage(page + 1);
   };
@@ -43,7 +92,7 @@ export default function Home(props) {
         <h2>Inicio</h2>
       </div>
       {posts && <ListPosts posts={posts} />}
-      <Button onClick={moreData} className="load-more">
+      <Button onClick={moreData} className="load-more" >
         {!loadingPosts ? (
           loadingPosts !== 0 ? (
             "Obtener más Posts"
@@ -78,3 +127,4 @@ function formatModel(posts) {
   
   return postsTemp;
 }
+

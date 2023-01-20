@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import axios from "axios";
 import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import es from "date-fns/locale/es";
@@ -90,6 +91,36 @@ export default function EditUserForm(props) {
     window.location.reload();
   };
 
+  const handleClick  = async  () => {
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const API_KEY = "AIzaSyAiX028Ae0mth3rt13hBdXOjHv1SiT4plk";
+            axios
+                .get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`)
+                .then(response => {
+                  const ubicacionFiltrar = response.data.results[0].formatted_address;
+                  const ubicacion = ubicacionFiltrar.replace(/^.*?,.*?,/, '').replace(/\d+ /, '')
+                  setFormData({...formData, ubicacion: ubicacion})
+                  console.log(ubicacion)
+                  const locationString = `${latitude}, ${longitude}`;
+                  setFormData({...formData, coordenadas: locationString});
+                  console.log(locationString);
+                  console.log(formData);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        },
+        error => {
+            console.log(error);
+        }
+    );
+  };
+
+
   return (
     <div className="edit-user-form">
       <div
@@ -147,13 +178,23 @@ export default function EditUserForm(props) {
         </Form.Group>
 
         <Form.Group>
-          <Form.Control
-            type="text"
-            placeholder="Telefono"
-            name="sitioWeb"
-            defaultValue={user.phone}
-            onChange={onChange}
-          />
+          <Row>
+          <Col>
+            <Form.Control
+              type="text"
+              placeholder="Telefono"
+              name="sitioWeb"
+              defaultValue={user.phone}
+              onChange={onChange}
+            />
+          </Col>
+          <Col>
+            <div></div>
+            <Button className="btn-location-submit" variant="primary" onClick={handleClick}>
+              {loading && <Spinner animation="border" size="sm" />} Obtener ubicación de contacto
+            </Button>
+          </Col>  
+          </Row>
         </Form.Group>
 
         <Form.Group>
@@ -183,5 +224,6 @@ function initialValue(user) {
     ubicacion: user.ubicacion || "",
     sitioWeb: user.sitioWeb || "",
     fechaNacimiento: user.fechaNacimiento || "",
+    coordenadas : user.coordenadas || "",
   };
 }
