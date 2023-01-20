@@ -1,5 +1,7 @@
 import { API_HOST } from "../utils/constant";
 import { getTokenApi } from "./auth";
+import { toast } from "react-toastify";
+import axios from 'axios';
 
 
 export async function uploadAndGetPosts(mensaje, postFile, idUser, page) {
@@ -126,8 +128,6 @@ export function uploadPostApi(file) {
       return err;
     });
 }
-
-
 
 export function getPostsFollowersApi(page = 1) {
   const url = `${API_HOST}/leoPostsSeguidores?pagina=${page}`;
